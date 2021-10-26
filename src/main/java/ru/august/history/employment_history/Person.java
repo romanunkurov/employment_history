@@ -1,18 +1,12 @@
 package ru.august.history.employment_history;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "person")
 public class Person {
 
-    @Id
     private Long id;
-
-
     private String firstName;
     private String middleName;
     private String lastName;
@@ -21,17 +15,8 @@ public class Person {
     private String snils;
     private String phoneNumber;
     private String email;
-
-    @Column(name = "inn", nullable = false, length = 20)
     private String inn;
 
-    public String getInn() {
-        return inn;
-    }
-
-    public void setInn(String inn) {
-        this.inn = inn;
-    }
 
     public Person() {
 
@@ -48,6 +33,8 @@ public class Person {
         this.email = email;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -56,6 +43,7 @@ public class Person {
         this.id = id;
     }
 
+    @Column(name = "first_name", nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -64,6 +52,7 @@ public class Person {
         this.firstName = firstName;
     }
 
+    @Column(name = "middle_name", nullable = false)
     public String getMiddleName() {
         return middleName;
     }
@@ -72,6 +61,7 @@ public class Person {
         this.middleName = middleName;
     }
 
+    @Column(name = "last_name", nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -80,6 +70,7 @@ public class Person {
         this.lastName = lastName;
     }
 
+    @Column(name = "passport_series", nullable = false)
     public String getPassportSeries() {
         return passportSeries;
     }
@@ -88,6 +79,7 @@ public class Person {
         this.passportSeries = passportSeries;
     }
 
+    @Column(name = "passport_number", nullable = false)
     public String getPassportNumber() {
         return passportNumber;
     }
@@ -96,6 +88,7 @@ public class Person {
         this.passportNumber = passportNumber;
     }
 
+    @Column(name = "snils", nullable = false)
     public String getSnils() {
         return snils;
     }
@@ -104,6 +97,7 @@ public class Person {
         this.snils = snils;
     }
 
+    @Column(name = "phone_number", nullable = false)
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -112,6 +106,16 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
+    @Column(name = "inn", nullable = false)
+    public String getInn() {
+        return inn;
+    }
+
+    public void setInn(String inn) {
+        this.inn = inn;
+    }
+
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }

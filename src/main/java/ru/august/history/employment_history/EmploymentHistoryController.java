@@ -10,20 +10,20 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/person")
+@RequestMapping("/api/mycrudapp")
 public class EmploymentHistoryController {
 
     @Autowired
     private EmploymentHistoryRepository repository;
 
-    @GetMapping("/{id}")
+    @GetMapping
     public List<Person> getAllEmployees() {
         return repository.findAll();
     }
 
 
     //get employee by id with his/her job history
-    @GetMapping("/{id}")
+    @GetMapping("employees/{id}")
     public ResponseEntity<Person> getEmployeeById(@PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
         Person employee = repository.findById(employeeId)
@@ -42,6 +42,11 @@ public class EmploymentHistoryController {
         employee.setFirstName(employeeDetails.getFirstName());
         final Person updatedEmployee = repository.save(employee);
         return ResponseEntity.ok(updatedEmployee);
+    }
+
+    @PostMapping("/employees")
+    public Person createEmployee(@RequestBody Person employee) {
+        return repository.save(employee);
     }
 
     @DeleteMapping("/employees/{id}")
