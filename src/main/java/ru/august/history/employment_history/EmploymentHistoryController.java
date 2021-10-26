@@ -32,6 +32,7 @@ public class EmploymentHistoryController {
         return ResponseEntity.ok().body(employee);
     }
 
+    //update employee
     @PutMapping("/employees/{id}")
     public ResponseEntity<Person> updateEmployee(@PathVariable(value = "id") Long employeeId,
                                                     @RequestBody Person employeeDetails) throws ResourceNotFoundException {
@@ -45,11 +46,13 @@ public class EmploymentHistoryController {
         return ResponseEntity.ok(updatedEmployee);
     }
 
+    //create and add new employee
     @PostMapping("/employees")
     public Person createEmployee(@RequestBody Person employee) {
         return repository.save(employee);
     }
 
+    //delete existing employee
     @DeleteMapping("/employees/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
@@ -61,6 +64,16 @@ public class EmploymentHistoryController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+
+    @GetMapping("employees/{id}/work")
+    public ResponseEntity<Person> getEmployeeWorkingHistory(@PathVariable(value = "id") Long employeeId)
+            throws ResourceNotFoundException {
+        Person employee = repository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+        return ResponseEntity.ok().body(employee.);
+    }
+
+
 
 
 
