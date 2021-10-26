@@ -4,6 +4,7 @@ package ru.august.history.employment_history;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.august.history.employment_history.exceptions.ResourceNotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
