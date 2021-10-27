@@ -1,10 +1,16 @@
-package ru.august.history.employment_history;
+package ru.august.history.employment_history.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import ru.august.history.employment_history.dto.PersonDTO;
+import ru.august.history.employment_history.repository.PersonRepository;
+import ru.august.history.employment_history.model.Person;
+import ru.august.history.employment_history.model.Work;
 import ru.august.history.employment_history.exceptions.ResourceNotFoundException;
+import ru.august.history.employment_history.service.EmploymentHistoryService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +21,10 @@ import java.util.Map;
 public class EmploymentHistoryController {
 
     @Autowired
-    private EmploymentHistoryRepository repository;
+    private PersonRepository repository;
+
+    @Autowired
+    private EmploymentHistoryService service;
 
     @GetMapping
     public List<Person> getAllEmployees() {
@@ -48,8 +57,8 @@ public class EmploymentHistoryController {
 
     //create and add new employee
     @PostMapping("/employees")
-    public Person createEmployee(@RequestBody Person employee) {
-        return repository.save(employee);
+    public Person createEmployee(@RequestBody PersonDTO dto) {
+        return service.createEmployee(dto);
     }
 
     //delete existing employee
@@ -65,12 +74,15 @@ public class EmploymentHistoryController {
         return response;
     }
 
-    @GetMapping("employees/{id}/work")
-    public ResponseEntity<Person> getEmployeeWorkingHistory(@PathVariable(value = "id") Long employeeId)
+    @GetMapping("employees/{id}/work/{work_id}")
+    public ResponseEntity<Work> getEmployeeWorkingHistory(@PathVariable(value = "id") Long employeeId,
+                                                          @PathVariable(value = "work_id") Long workId)
             throws ResourceNotFoundException {
         Person employee = repository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
-        return ResponseEntity.ok().body(employee.);
+        Work work =  employee.getWorkingList().get(Math.toIntExact(workId));
+
+        return ResponseEntity.ok().body(work);
     }
 
 

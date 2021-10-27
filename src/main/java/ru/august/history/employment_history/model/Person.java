@@ -1,10 +1,13 @@
-package ru.august.history.employment_history;
+package ru.august.history.employment_history.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
 public class Person {
+
+    private List<Work> workingList;
 
     private Long id;
     private String firstName;
@@ -32,6 +35,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,7 +128,13 @@ public class Person {
         this.email = email;
     }
 
-    public Work getWorkingHistory(Person employee) {
-
+    @OneToMany(mappedBy = "person")
+    public List<Work> getWorkingList() {
+        return workingList;
     }
+
+    public void setWorkingList(List<Work> workingList) {
+        this.workingList = workingList;
+    }
+
 }
