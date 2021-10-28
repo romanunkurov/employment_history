@@ -1,8 +1,7 @@
 package ru.august.history.employment_history.dto;
 
 
-import com.sun.istack.NotNull;
-
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class PersonDTO {
@@ -13,6 +12,7 @@ public class PersonDTO {
     private String lastName;
 
     private String middleName;
+
     @Pattern(regexp = "([0-9]{2} [0-9]{2})")
     private String passportSeries;
 

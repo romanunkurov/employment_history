@@ -12,12 +12,13 @@ import ru.august.history.employment_history.model.Work;
 import ru.august.history.employment_history.exceptions.ResourceNotFoundException;
 import ru.august.history.employment_history.service.EmploymentHistoryService;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/mycrudapp")
+@RequestMapping("/api/")
 public class EmploymentHistoryController {
 
     @Autowired
@@ -44,20 +45,20 @@ public class EmploymentHistoryController {
     //update employee
     @PutMapping("/employees/{id}")
     public ResponseEntity<Person> updateEmployee(@PathVariable(value = "id") Long employeeId,
-                                                    @RequestBody Person employeeDetails) throws ResourceNotFoundException {
-        Person employee = repository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+                                                    @RequestBody PersonDTO employeeDetails) throws ResourceNotFoundException {
 
-        employee.setEmail(employeeDetails.getEmail());
-        employee.setLastName(employeeDetails.getLastName());
-        employee.setFirstName(employeeDetails.getFirstName());
+        try {
+            service.updateEmployeeData(employeeId, employeeDetails)
+        }   catch (ResourceNotFoundException e) {
+
+        }
         final Person updatedEmployee = repository.save(employee);
         return ResponseEntity.ok(updatedEmployee);
     }
 
     //create and add new employee
-    @PostMapping("/employees")
-    public Person createEmployee(@RequestBody PersonDTO dto) {
+    @PostMapping("/employees/create")
+    public Person createEmployee(@RequestBody @Valid PersonDTO dto) {
         return service.createEmployee(dto);
     }
 
@@ -65,12 +66,7 @@ public class EmploymentHistoryController {
     @DeleteMapping("/employees/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
-        Person employee = repository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
 
-        repository.delete(employee);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
         return response;
     }
 

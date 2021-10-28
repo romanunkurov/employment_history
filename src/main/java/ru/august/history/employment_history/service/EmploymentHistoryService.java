@@ -5,6 +5,9 @@ import ru.august.history.employment_history.dto.PersonDTO;
 import ru.august.history.employment_history.model.Person;
 import ru.august.history.employment_history.repository.PersonRepository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class EmploymentHistoryService {
 
@@ -38,4 +41,34 @@ public class EmploymentHistoryService {
 
         return repository.save(person);
     }
+
+    public Person getEmployeeById(PersonDTO dto) {
+        Person person = new Person();
+        return null;
+    }
+
+    public Person updateEmployeeData(Long employeeId, PersonDTO personDetails) {
+        Person employee = repository.getById(employeeId);
+
+        employee.setFirstName(personDetails.getFirstName());
+        employee.setLastName(personDetails.getLastName());
+        employee.setMiddleName(personDetails.getMiddleName());
+        employee.setEmail(personDetails.getEmail());
+        employee.setInn(personDetails.getInn());
+        employee.setPassportSeries(personDetails.getPassportSeries());
+        employee.setPassportNumber(personDetails.getPassportNumber());
+        employee.setSnils(personDetails.getSnils());
+
+        final Person updatedEmployee = repository.save(employee);
+    }
+
+    public Map<String, Boolean> deleteEmployee(Long employeeId) {
+        Person employee = repository.getById(employeeId);
+        repository.delete(employee);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+    }
+
+
 }

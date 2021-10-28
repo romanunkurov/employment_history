@@ -1,6 +1,8 @@
 package ru.august.history.employment_history.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,7 +13,7 @@ public class Work {
     private Person person;
 
     private Long id;
-    private String company_name;
+    private String companyName;
     private String inn;
     private Date startWork;
     private Date endWork;
@@ -21,9 +23,9 @@ public class Work {
 
     }
 
-    public Work(Long id, String company_name, String inn, Date startWork, Date endWork, String position) {
+    public Work(Long id, String companyName, String inn, Date startWork, Date endWork, String position) {
         this.id = id;
-        this.company_name = company_name;
+        this.companyName = companyName;
         this.inn = inn;
         this.startWork = startWork;
         this.endWork = endWork;
@@ -41,12 +43,12 @@ public class Work {
     }
 
     @Column(name = "company_name", nullable = false)
-    public String getCompany_name() {
-        return company_name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setCompanyName(String company_name) {
+        this.companyName = company_name;
     }
 
     @Column(name = "inn", nullable = false)
@@ -88,6 +90,7 @@ public class Work {
 
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
+    @JsonIgnore
     public Person getPerson() {
         return person;
     }
