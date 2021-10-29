@@ -1,6 +1,7 @@
 package ru.august.history.employment_history.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -15,7 +16,11 @@ public class Work {
     private Long id;
     private String companyName;
     private String inn;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date startWork;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date endWork;
     private String position;
 

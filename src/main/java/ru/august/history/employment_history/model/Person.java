@@ -128,7 +128,7 @@ public class Person {
         this.email = email;
     }
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     public List<Work> getWorkingList() {
         return workingList;
     }
