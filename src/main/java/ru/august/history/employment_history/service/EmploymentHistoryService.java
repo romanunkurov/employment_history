@@ -1,6 +1,5 @@
 package ru.august.history.employment_history.service;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.august.history.employment_history.dto.PersonDTO;
 import ru.august.history.employment_history.dto.WorkDTO;
@@ -137,10 +136,31 @@ public class EmploymentHistoryService {
     }
 
     public Work updateWorkingHistory(Long employeeId, Long workId, WorkDTO dto) {
-        return null;
+        Person employee = repository.getById(employeeId);
+
+        Work updatedWork = employee.getWorkingList().get(Math.toIntExact(workId));
+
+        updatedWork.setInn(dto.getInn());
+        updatedWork.setStartWork(dto.getStartWork());
+        updatedWork.setEndWork(dto.getEndWork());
+
+        //if person has changed his/her data??
+        //if the name of the company has changed??
+
+        updatedWork.setPosition(dto.getPosition());
+
+
+        return updatedWork;
     }
 
     public Map<String, Boolean> deleteEmployeeWorkingHistory(Long employeeId, Long workId) {
-        return null;
+
+        Person employee = repository.getById(employeeId);
+
+        employee.getWorkingList().remove(workId);
+
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("Deleted", Boolean.TRUE);
+        return map;
     }
 }
