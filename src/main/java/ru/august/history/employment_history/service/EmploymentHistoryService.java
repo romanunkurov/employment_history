@@ -9,6 +9,7 @@ import ru.august.history.employment_history.model.Work;
 import ru.august.history.employment_history.repository.PersonRepository;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -121,11 +122,29 @@ public class EmploymentHistoryService {
         employee.getWorkingList().add(work);
 
         Person updatedPerson = repository.save(employee);
+        Work workToSearch = null;
 
-        //TODO: refactoring
-        return updatedPerson.getWorkingList().get(updatedPerson.getWorkingList().size() - 1);
+        Iterator<Work> iterator = updatedPerson.getWorkingList().listIterator();
 
-        //return work;
+        while (iterator.hasNext()) {
+            Work currentWork =  iterator.next();
+            if (currentWork.getCompanyName().equals(work.getCompanyName())) {
+                if (currentWork.getInn().equals(work.getInn())) {
+                    if (currentWork.getPosition().equals(work.getPosition())) {
+                        workToSearch = currentWork;
+                    }
+                }
+            }
+        }
+
+        return updatedPerson.getWorkingList()
+                .stream()
+                .filter(work1 -> work1.getCompanyName().equals(work.getCompanyName()))
+                .filter(work1 -> work1.getInn().equals(work.getInn()))
+                .filter(work1 -> work1.getPosition().equals(work.getPosition()))
+                .findFirst().get();
+
+        //return workToSearch;
     }
 
 
@@ -143,12 +162,8 @@ public class EmploymentHistoryService {
         updatedWork.setInn(dto.getInn());
         updatedWork.setStartWork(dto.getStartWork());
         updatedWork.setEndWork(dto.getEndWork());
-
-        //if person has changed his/her data??
-        //if the name of the company has changed??
-
+        updatedWork.setCompanyName(dto.getCompanyName());
         updatedWork.setPosition(dto.getPosition());
-
 
         return updatedWork;
     }
