@@ -8,7 +8,6 @@ import java.util.List;
 public class Person {
 
     private List<Work> workingList;
-
     private Long id;
     private String firstName;
     private String middleName;

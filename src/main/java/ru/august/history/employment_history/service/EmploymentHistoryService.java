@@ -3,13 +3,11 @@ package ru.august.history.employment_history.service;
 import org.springframework.stereotype.Service;
 import ru.august.history.employment_history.dto.PersonDTO;
 import ru.august.history.employment_history.dto.WorkDTO;
-import ru.august.history.employment_history.exceptions.ResourceNotFoundException;
 import ru.august.history.employment_history.model.Person;
 import ru.august.history.employment_history.model.Work;
 import ru.august.history.employment_history.repository.PersonRepository;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +24,8 @@ public class EmploymentHistoryService {
         return repository.findAll();
     }
 
-    public Person getEmployeeById(Long employeeId) throws ResourceNotFoundException {
+    public Person getEmployeeById(Long employeeId) {
         return repository.getById(employeeId);
-
     }
 
     public Person createEmployee(PersonDTO dto) {
@@ -92,19 +89,19 @@ public class EmploymentHistoryService {
         return response;
     }
 
-    public Work getEmployeeWorkingHistory(Long employeeId, Long workId) {
+    public Work selectEmployeeWork(Long employeeId, Long workId) {
         Person employee = repository.getById(employeeId);
 
-        Work workWeNeed = null;
+        Work selectedWork = null;
 
-        for ( Work work : employee.getWorkingList()) {
+        for (Work work : employee.getWorkingList()) {
             if (work.getId().equals(workId)) {
-                workWeNeed = work;
-                return workWeNeed;
+                selectedWork = work;
+                return selectedWork;
             }
         }
 
-        return workWeNeed;
+        return selectedWork;
     }
 
     public Work addNewWork(Long employeeId, WorkDTO dto) {
@@ -122,20 +119,6 @@ public class EmploymentHistoryService {
         employee.getWorkingList().add(work);
 
         Person updatedPerson = repository.save(employee);
-        Work workToSearch = null;
-
-        Iterator<Work> iterator = updatedPerson.getWorkingList().listIterator();
-
-        while (iterator.hasNext()) {
-            Work currentWork =  iterator.next();
-            if (currentWork.getCompanyName().equals(work.getCompanyName())) {
-                if (currentWork.getInn().equals(work.getInn())) {
-                    if (currentWork.getPosition().equals(work.getPosition())) {
-                        workToSearch = currentWork;
-                    }
-                }
-            }
-        }
 
         return updatedPerson.getWorkingList()
                 .stream()
@@ -143,12 +126,9 @@ public class EmploymentHistoryService {
                 .filter(work1 -> work1.getInn().equals(work.getInn()))
                 .filter(work1 -> work1.getPosition().equals(work.getPosition()))
                 .findFirst().get();
-
-        //return workToSearch;
     }
 
-
-    public List<Work> getEmployeeWorkingHistory(Long employeeId) {
+    public List<Work> selectEmployeeWork(Long employeeId) {
         Person employee = repository.getById(employeeId);
 
         return employee.getWorkingList();

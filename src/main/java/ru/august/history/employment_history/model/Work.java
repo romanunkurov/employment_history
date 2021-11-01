@@ -1,6 +1,5 @@
 package ru.august.history.employment_history.model;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,7 +11,6 @@ import java.util.Date;
 public class Work {
 
     private Person person;
-
     private Long id;
     private String companyName;
     private String inn;
