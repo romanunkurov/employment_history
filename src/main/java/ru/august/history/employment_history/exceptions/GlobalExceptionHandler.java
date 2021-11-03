@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getLocalizedMessage(), "Not valid argument, чтоб было видно!");
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getLocalizedMessage(), "Not valid argument");
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 

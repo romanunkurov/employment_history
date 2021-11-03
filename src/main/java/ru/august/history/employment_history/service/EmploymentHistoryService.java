@@ -151,11 +151,11 @@ public class EmploymentHistoryService {
     public Map<String, Boolean> deleteEmployeeWorkingHistory(Long employeeId, Long workId) {
 
         Person employee = repository.getById(employeeId);
-
         employee.getWorkingList().remove(workId);
 
         Map<String, Boolean> map = new HashMap<>();
         map.put("Deleted", Boolean.TRUE);
+
         return map;
     }
 }

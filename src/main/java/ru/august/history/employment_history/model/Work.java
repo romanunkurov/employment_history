@@ -59,7 +59,6 @@ public class Work {
         return inn;
     }
 
-
     public void setInn(String inn) {
         this.inn = inn;
     }

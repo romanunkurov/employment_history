@@ -2,7 +2,6 @@ package ru.august.history.employment_history.exceptions;
 
 import java.util.Date;
 
-
 public class ErrorDetails {
 
     private Date timestamp;
