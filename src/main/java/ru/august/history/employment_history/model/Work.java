@@ -17,19 +17,18 @@ public class Work {
     private String companyName;
     @Column(name = "inn", nullable = false)
     private String inn;
-    @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
-    @JsonIgnore
-    private Person person;
     @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "start_work", nullable = false)
     private Date startWork;
-
     @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "end_work", nullable = false)
     private Date endWork;
     @Column(name = "position", nullable = false)
     private String position;
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    @JsonIgnore
+    private Person person;
 
     public Work() {
 
