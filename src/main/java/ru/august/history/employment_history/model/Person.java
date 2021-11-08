@@ -7,21 +7,31 @@ import java.util.List;
 @Table(name = "person")
 public class Person {
 
-    private List<Work> workingList;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    @Column(name = "middle_name", nullable = false)
     private String middleName;
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Column(name = "passport_series", nullable = false)
     private String passportSeries;
+    @Column(name = "passport_number", nullable = false)
     private String passportNumber;
+    @Column(name = "snils", nullable = false)
     private String snils;
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+    @Column(name = "email")
     private String email;
+    @Column(name = "inn", nullable = false)
     private String inn;
-
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Work> workingList;
 
     public Person() {
-
     }
 
     public Person(String firstName, String middleName, String lastName, String passportSeries, String passportNumber, String snils, String phoneNumber, String email) {
@@ -35,9 +45,6 @@ public class Person {
         this.email = email;
     }
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -46,7 +53,6 @@ public class Person {
         this.id = id;
     }
 
-    @Column(name = "first_name", nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -55,7 +61,6 @@ public class Person {
         this.firstName = firstName;
     }
 
-    @Column(name = "middle_name", nullable = false)
     public String getMiddleName() {
         return middleName;
     }
@@ -64,7 +69,6 @@ public class Person {
         this.middleName = middleName;
     }
 
-    @Column(name = "last_name", nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -73,7 +77,6 @@ public class Person {
         this.lastName = lastName;
     }
 
-    @Column(name = "passport_series", nullable = false)
     public String getPassportSeries() {
         return passportSeries;
     }
@@ -82,7 +85,6 @@ public class Person {
         this.passportSeries = passportSeries;
     }
 
-    @Column(name = "passport_number", nullable = false)
     public String getPassportNumber() {
         return passportNumber;
     }
@@ -91,7 +93,6 @@ public class Person {
         this.passportNumber = passportNumber;
     }
 
-    @Column(name = "snils", nullable = false)
     public String getSnils() {
         return snils;
     }
@@ -100,7 +101,6 @@ public class Person {
         this.snils = snils;
     }
 
-    @Column(name = "phone_number", nullable = false)
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -109,7 +109,6 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    @Column(name = "inn", nullable = false)
     public String getInn() {
         return inn;
     }
@@ -118,7 +117,6 @@ public class Person {
         this.inn = inn;
     }
 
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -127,7 +125,6 @@ public class Person {
         this.email = email;
     }
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     public List<Work> getWorkingList() {
         return workingList;
     }
