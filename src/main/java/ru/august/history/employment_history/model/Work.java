@@ -10,17 +10,25 @@ import java.util.Date;
 @Table(name = "work")
 public class Work {
 
-    private Person person;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "company_name", nullable = false)
     private String companyName;
+    @Column(name = "inn", nullable = false)
     private String inn;
-
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "start_work", nullable = false)
     private Date startWork;
-
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "end_work", nullable = false)
     private Date endWork;
+    @Column(name = "position", nullable = false)
     private String position;
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    @JsonIgnore
+    private Person person;
 
     public Work() {
 
@@ -35,8 +43,6 @@ public class Work {
         this.position = position;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -45,7 +51,6 @@ public class Work {
         this.id = id;
     }
 
-    @Column(name = "company_name", nullable = false)
     public String getCompanyName() {
         return companyName;
     }
@@ -54,7 +59,6 @@ public class Work {
         this.companyName = company_name;
     }
 
-    @Column(name = "inn", nullable = false)
     public String getInn() {
         return inn;
     }
@@ -63,7 +67,6 @@ public class Work {
         this.inn = inn;
     }
 
-    @Column(name = "start_work", nullable = false)
     public Date getStartWork() {
         return startWork;
     }
@@ -72,7 +75,6 @@ public class Work {
         this.startWork = startWork;
     }
 
-    @Column(name = "end_work", nullable = false)
     public Date getEndWork() {
         return endWork;
     }
@@ -81,7 +83,6 @@ public class Work {
         this.endWork = endWork;
     }
 
-    @Column(name = "position", nullable = false)
     public String getPosition() {
         return position;
     }
@@ -90,9 +91,6 @@ public class Work {
         this.position = position;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
-    @JsonIgnore
     public Person getPerson() {
         return person;
     }
