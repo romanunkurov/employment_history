@@ -2,15 +2,16 @@ package ru.august.history.employment_history.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.august.history.employment_history.dto.PersonDTO;
+import ru.august.history.employment_history.dto.EmployeeDTO;
 import ru.august.history.employment_history.dto.WorkDTO;
-import ru.august.history.employment_history.model.Person;
+import ru.august.history.employment_history.model.Employee;
 import ru.august.history.employment_history.model.Work;
 import ru.august.history.employment_history.service.EmploymentHistoryService;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/v1/employees")
@@ -23,24 +24,24 @@ public class EmploymentHistoryController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Person>> getAllEmployees() {
+    public ResponseEntity<List<Employee>> getAllEmployees() {
         return ResponseEntity.ok().body(service.getAllEmployees());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Person> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) {
         return ResponseEntity.ok().body(service.getEmployeeById(employeeId));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Person> updateEmployee(@PathVariable(value = "id") Long employeeId,
-                                                 @Valid @RequestBody PersonDTO employeeDetails) {
-        Person employee = service.updateEmployeeData(employeeId, employeeDetails);
+    public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,
+                                                   @Valid @RequestBody EmployeeDTO employeeDetails) {
+        Employee employee = service.updateEmployeeData(employeeId, employeeDetails);
         return ResponseEntity.ok(employee);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Person> createEmployee(@RequestBody @Valid PersonDTO dto) {
+    public ResponseEntity<Employee> createEmployee(@RequestBody @Valid EmployeeDTO dto) {
         return ResponseEntity.ok().body(service.createEmployee(dto));
     }
 

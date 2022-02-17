@@ -3,7 +3,7 @@ package ru.august.history.employment_history.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-public class PersonDTO {
+public class EmployeeDTO {
 
     @NotNull
     private String firstName;

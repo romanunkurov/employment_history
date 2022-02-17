@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "person")
-public class Person {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +31,10 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Work> workingList;
 
-    public Person() {
+    public Employee() {
     }
 
-    public Person(String firstName, String middleName, String lastName, String passportSeries, String passportNumber, String snils, String phoneNumber, String email) {
+    public Employee(String firstName, String middleName, String lastName, String passportSeries, String passportNumber, String snils, String phoneNumber, String email) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;

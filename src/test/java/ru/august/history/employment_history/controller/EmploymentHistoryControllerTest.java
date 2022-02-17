@@ -3,7 +3,7 @@ package ru.august.history.employment_history.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
-import ru.august.history.employment_history.model.Person;
+import ru.august.history.employment_history.model.Employee;
 import ru.august.history.employment_history.service.EmploymentHistoryService;
 
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ public class EmploymentHistoryControllerTest {
 
     @Test
     public void getAllEmployees_positiveTest() {
-        List<Person> persons = new ArrayList<>();
-        persons.add(new Person());
+        List<Employee> persons = new ArrayList<>();
+        persons.add(new Employee());
 
         when(service.getAllEmployees()).thenReturn(persons);
-        ResponseEntity<List<Person>> listResponseEntity = controller.getAllEmployees();
+        ResponseEntity<List<Employee>> listResponseEntity = controller.getAllEmployees();
 
         assertNotNull(listResponseEntity.getBody());
     }
@@ -45,9 +45,9 @@ public class EmploymentHistoryControllerTest {
 
     @Test
     public void getEmployeeById_positiveTest() {
-        Person expectedPerson = new Person();
-        when(service.getEmployeeById(anyLong())).thenReturn(expectedPerson);
-        ResponseEntity<Person> responseEntity = controller.getEmployeeById(1L);
+        Employee expectedEmployee = new Employee();
+        when(service.getEmployeeById(anyLong())).thenReturn(expectedEmployee);
+        ResponseEntity<Employee> responseEntity = controller.getEmployeeById(1L);
         assertNotNull(responseEntity.getBody());
     }
 

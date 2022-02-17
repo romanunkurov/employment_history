@@ -1,9 +1,9 @@
 package ru.august.history.employment_history.service;
 
 import org.springframework.stereotype.Service;
-import ru.august.history.employment_history.dto.PersonDTO;
+import ru.august.history.employment_history.dto.EmployeeDTO;
 import ru.august.history.employment_history.dto.WorkDTO;
-import ru.august.history.employment_history.model.Person;
+import ru.august.history.employment_history.model.Employee;
 import ru.august.history.employment_history.model.Work;
 import ru.august.history.employment_history.repository.PersonRepository;
 
@@ -20,24 +20,24 @@ public class EmploymentHistoryService {
         this.repository = repository;
     }
 
-    public List<Person> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return repository.findAll();
     }
 
-    public Person getEmployeeById(Long employeeId) {
+    public Employee getEmployeeById(Long employeeId) {
         return repository.getById(employeeId);
     }
 
-    public Person createEmployee(PersonDTO dto) {
-        Person person = new Person();
-        person.setFirstName(dto.getFirstName());
-        person.setLastName(dto.getLastName());
-        person.setMiddleName(dto.getMiddleName());
-        person.setEmail(dto.getEmail());
-        person.setInn(dto.getInn());
-        person.setPassportSeries(dto.getPassportSeries());
-        person.setPassportNumber(dto.getPassportNumber());
-        person.setSnils(dto.getSnils());
+    public Employee createEmployee(EmployeeDTO dto) {
+        Employee employee = new Employee();
+        employee.setFirstName(dto.getFirstName());
+        employee.setLastName(dto.getLastName());
+        employee.setMiddleName(dto.getMiddleName());
+        employee.setEmail(dto.getEmail());
+        employee.setInn(dto.getInn());
+        employee.setPassportSeries(dto.getPassportSeries());
+        employee.setPassportNumber(dto.getPassportNumber());
+        employee.setSnils(dto.getSnils());
 
         String correctNumber = dto.getPhoneNumber();
 
@@ -48,13 +48,13 @@ public class EmploymentHistoryService {
             correctNumber = phone.substring(1);
         }
 
-        person.setPhoneNumber(correctNumber);
+        employee.setPhoneNumber(correctNumber);
 
-        return repository.save(person);
+        return repository.save(employee);
     }
 
-    public Person updateEmployeeData(Long employeeId, PersonDTO personDetails) {
-        Person employee = repository.getById(employeeId);
+    public Employee updateEmployeeData(Long employeeId, EmployeeDTO personDetails) {
+        Employee employee = repository.getById(employeeId);
 
         employee.setFirstName(personDetails.getFirstName());
         employee.setLastName(personDetails.getLastName());
@@ -80,7 +80,7 @@ public class EmploymentHistoryService {
     }
 
     public Map<String, Boolean> deleteEmployee(Long employeeId) {
-        Person employee = repository.getById(employeeId);
+        Employee employee = repository.getById(employeeId);
         repository.delete(employee);
 
         Map<String, Boolean> response = new HashMap<>();
@@ -90,7 +90,7 @@ public class EmploymentHistoryService {
     }
 
     public Work selectEmployeeWork(Long employeeId, Long workId) {
-        Person employee = repository.getById(employeeId);
+        Employee employee = repository.getById(employeeId);
 
         Work selectedWork = null;
 
@@ -105,7 +105,7 @@ public class EmploymentHistoryService {
     }
 
     public Work addNewWork(Long employeeId, WorkDTO dto) {
-        Person employee = repository.getById(employeeId);
+        Employee employee = repository.getById(employeeId);
 
         Work work = new Work();
 
@@ -118,7 +118,7 @@ public class EmploymentHistoryService {
 
         employee.getWorkingList().add(work);
 
-        Person updatedPerson = repository.save(employee);
+        Employee updatedPerson = repository.save(employee);
 
         return updatedPerson.getWorkingList()
                 .stream()
@@ -129,13 +129,13 @@ public class EmploymentHistoryService {
     }
 
     public List<Work> selectEmployeeWork(Long employeeId) {
-        Person employee = repository.getById(employeeId);
+        Employee employee = repository.getById(employeeId);
 
         return employee.getWorkingList();
     }
 
     public Work updateWorkingHistory(Long employeeId, Long workId, WorkDTO dto) {
-        Person employee = repository.getById(employeeId);
+        Employee employee = repository.getById(employeeId);
 
         Work updatedWork = employee.getWorkingList().get(Math.toIntExact(workId));
 
@@ -150,7 +150,7 @@ public class EmploymentHistoryService {
 
     public Map<String, Boolean> deleteEmployeeWorkingHistory(Long employeeId, Long workId) {
 
-        Person employee = repository.getById(employeeId);
+        Employee employee = repository.getById(employeeId);
         employee.getWorkingList().remove(workId);
 
         Map<String, Boolean> map = new HashMap<>();

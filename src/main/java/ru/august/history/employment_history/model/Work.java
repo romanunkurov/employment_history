@@ -28,7 +28,7 @@ public class Work {
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
     @JsonIgnore
-    private Person person;
+    private Employee person;
 
     public Work() {
 
@@ -91,11 +91,11 @@ public class Work {
         this.position = position;
     }
 
-    public Person getPerson() {
+    public Employee getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(Employee employee) {
+        this.person = employee;
     }
 }
